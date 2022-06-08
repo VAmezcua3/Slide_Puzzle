@@ -3,7 +3,7 @@
 var rows = 3;
 var columns = 3;
 
-const startTime = 60
+const startTime = .5
 let time = startTime * 60
 
 var currentTile;
@@ -13,7 +13,10 @@ var turns = 0;
 
 var imgOrder = ["4", "2", "8", "5", "1", "6", "7", "9", "3"];
 
-winner = null;
+let winner = false;
+let gameActive = true
+console.log(winner, "winner status")
+console.log(gameActive, "is game active");
 
 //*************** DOM SELECTIONS ***************//
 const count = document.getElementById("countdown");
@@ -63,6 +66,10 @@ function dragDrop(){
 }
 
 function dragEnd(){
+    if (gameActive === false){
+        return
+    }
+
     if(!otherTile.src.includes("3.jpg")){
         return
     }
@@ -102,7 +109,9 @@ const updateTimer = () => {
     seconds = seconds < 10 ? "0" + seconds : seconds;
     count.innerHTML = `${minutes}:${seconds}`;
     time--;
-    if (time <= 0){
+    if (time <= -1){
+        gameActive = false
+        console.log(gameActive, "game active changed");
         count.innerHTML = `GAME OVER`;
         document.getElementById("countdown").style.fontSize="3rem"
         document.getElementById("countdown").style.paddingBottom="2rem"
@@ -123,9 +132,9 @@ const checkWinner = () => {
         let G = solutionPosition[6]
         let H = solutionPosition[7]
         let I = solutionPosition[8]
-
-        for (let j = 0; j < board.length; j++){
-            let boardPosition = board[j]
+    }
+        for (let j = 0; j < imgOrder.length; j++){
+            let boardPosition = imgOrder[j]
             let valueOne = boardPosition[0];
             let valueTwo = boardPosition[1];
             let valueThree = boardPosition[2];
@@ -147,10 +156,10 @@ const checkWinner = () => {
                 valueNine === I){
             winner = true
             }
-        }
 
         if (winner === true){
             turnStatus.innerHTML = "How You Play The Cards You're Dealt Is All That Matters"
+            time = time
         }
     }
 }
