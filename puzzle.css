@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+
 body{
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
@@ -19,4 +21,25 @@ body{
     width: 118px;
     height: 118px;
     border: 1px solid black;
+}
+
+#countdown{
+    color: lime;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15rem;
+    padding: 1rem;
+}
+
+p{
+    width: 15rem;
+    height: 8rem;
+    border-radius: 10%;
+    box-shadow:
+      0 0 10px 6px #f0f, 
+      0 0 14px 9px #0ff;
 }

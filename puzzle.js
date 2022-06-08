@@ -1,13 +1,25 @@
+//*************** STATE ***************//
+
 var rows = 3;
 var columns = 3;
+
+const startTime = 60
+let time = startTime * 60
 
 var currentTile;
 var otherTile;
 
 var turns = 0;
 
-// var imgOrder = [ "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var imgOrder = ["4", "2", "8", "5", "1", "6", "7", "9", "3"];
+
+winner = null;
+
+//*************** DOM SELECTIONS ***************//
+const count = document.getElementById("countdown");
+const turnStatus = document.getElementById("turns");
+
+//*************** DOM FUNCTIONS ***************//
 
 window.onload = function(){
     for (let r=0; r<rows; r++){
@@ -27,6 +39,8 @@ window.onload = function(){
         }
     }
 }
+
+//*************** HELPER FUNCTIONS ***************//
 
 function dragStart(){
     currentTile = this;
@@ -77,5 +91,69 @@ function dragEnd(){
 
         turns++
         document.getElementById("turns").innerText = turns;
+        checkWinner()
     }
 }
+
+const updateTimer = () => {
+    const minutes = Math.floor(time/60);
+    let seconds = time % 60;
+
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    count.innerHTML = `${minutes}:${seconds}`;
+    time--;
+    if (time <= 0){
+        count.innerHTML = `GAME OVER`;
+        document.getElementById("countdown").style.fontSize="3rem"
+        document.getElementById("countdown").style.paddingBottom="2rem"
+    }
+}
+
+const checkWinner = () => {
+    const solution = [ "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    for (let i = 0; i <solution.length; i++){
+        let solutionPosition = solution[i]
+        let A = solutionPosition[0] //"1"
+        let B = solutionPosition[1] //"2"
+        let C = solutionPosition[2] //"3"
+        let D = solutionPosition[3] //"4"
+        let E = solutionPosition[4]
+        let F = solutionPosition[5]
+        let G = solutionPosition[6]
+        let H = solutionPosition[7]
+        let I = solutionPosition[8]
+
+        for (let j = 0; j < board.length; j++){
+            let boardPosition = board[j]
+            let valueOne = boardPosition[0];
+            let valueTwo = boardPosition[1];
+            let valueThree = boardPosition[2];
+            let valueFour = boardPosition[3];
+            let valueFive = boardPosition[4];
+            let valueSix = boardPosition[5];
+            let valueSeven = boardPosition[6];
+            let valueEight = boardPosition[7];
+            let valueNine = boardPosition[8];
+
+            if (valueOne === A && 
+                valueTwo === B && 
+                valueThree === C && 
+                valueFour === D && 
+                valueFive === E &&
+                valueSix === F &&
+                valueSeven === G &&
+                valueEight === H &&
+                valueNine === I){
+            winner = true
+            }
+        }
+
+        if (winner === true){
+            turnStatus.innerHTML = "How You Play The Cards You're Dealt Is All That Matters"
+        }
+    }
+}
+
+//*************** BOOT STRAPPING ***************//
+setInterval(updateTimer, 1000);
