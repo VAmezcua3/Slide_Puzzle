@@ -2,7 +2,7 @@
 var rows = 3;
 var columns = 3;
 var turns = 0;
-const startTime = 60
+const startTime = 3
 let time = startTime * 60
 
 var currentTile;
@@ -11,7 +11,8 @@ var otherTile;
 var imgOrder = ["4", "2", "8", "5", "1", "6", "7", "9", "3"];
 
 let winner = false;
-let gameActive = true
+let gameActive = true;
+let timerPause = false;
 
 //*************** DOM SELECTIONS ***************//
 const count = document.getElementById("countdown");
@@ -97,17 +98,21 @@ function dragEnd(){
 }
 
 const updateTimer = () => {
-    const minutes = Math.floor(time/60);
-    let seconds = time % 60;
+    if (timerPause === true){
+        return
+    } else{
+        const minutes = Math.floor(time/60);
+        let seconds = time % 60;
 
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    count.innerHTML = `${minutes}:${seconds}`;
-    time--;
-    if (time <= -1){
-        gameActive = false
-        count.innerHTML = `GAME OVER`;
-        document.getElementById("countdown").style.fontSize="3rem"
-        document.getElementById("countdown").style.paddingBottom="2rem"
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        count.innerHTML = `${minutes}:${seconds}`;
+        time--;
+        if (time <= -1){
+            gameActive = false
+            count.innerHTML = `GAME OVER`;
+            document.getElementById("countdown").style.fontSize="3rem"
+            document.getElementById("countdown").style.paddingBottom="2rem"
+        }
     }
 }
 
@@ -139,6 +144,7 @@ const checkWinner = () => {
     }
     if (winner === true){
         turnStatus.innerHTML = "How You Play The Cards You're Dealt Is All That Matters"
+        timerPause = true;
     }
 }
 
