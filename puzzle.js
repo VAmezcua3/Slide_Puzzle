@@ -1,22 +1,17 @@
 //*************** STATE ***************//
-
 var rows = 3;
 var columns = 3;
-
-const startTime = .5
+var turns = 0;
+const startTime = 60
 let time = startTime * 60
 
 var currentTile;
 var otherTile;
 
-var turns = 0;
-
 var imgOrder = ["4", "2", "8", "5", "1", "6", "7", "9", "3"];
 
 let winner = false;
 let gameActive = true
-console.log(winner, "winner status")
-console.log(gameActive, "is game active");
 
 //*************** DOM SELECTIONS ***************//
 const count = document.getElementById("countdown");
@@ -37,7 +32,6 @@ window.onload = function(){
             tile.addEventListener("dragleave", dragLeave)
             tile.addEventListener("drop", dragDrop)
             tile.addEventListener("dragend", dragEnd)
-
             document.getElementById("board").append(tile)
         }
     }
@@ -111,7 +105,6 @@ const updateTimer = () => {
     time--;
     if (time <= -1){
         gameActive = false
-        console.log(gameActive, "game active changed");
         count.innerHTML = `GAME OVER`;
         document.getElementById("countdown").style.fontSize="3rem"
         document.getElementById("countdown").style.paddingBottom="2rem"
@@ -119,48 +112,33 @@ const updateTimer = () => {
 }
 
 const checkWinner = () => {
-    const solution = [ "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    const board = document.getElementById("board")
 
-    for (let i = 0; i <solution.length; i++){
-        let solutionPosition = solution[i]
-        let A = solutionPosition[0] //"1"
-        let B = solutionPosition[1] //"2"
-        let C = solutionPosition[2] //"3"
-        let D = solutionPosition[3] //"4"
-        let E = solutionPosition[4]
-        let F = solutionPosition[5]
-        let G = solutionPosition[6]
-        let H = solutionPosition[7]
-        let I = solutionPosition[8]
+    const tile1 = document.getElementById("0-0").getAttribute("src")
+    const tile2 = document.getElementById("0-1").getAttribute("src")
+    const tile3 = document.getElementById("0-2").getAttribute("src")
+    const tile4 = document.getElementById("1-0").getAttribute("src")
+    const tile5 = document.getElementById("1-1").getAttribute("src")
+    const tile6 = document.getElementById("1-2").getAttribute("src")
+    const tile7 = document.getElementById("2-0").getAttribute("src")
+    const tile8 = document.getElementById("2-1").getAttribute("src")
+    const tile9 = document.getElementById("2-2").getAttribute("src")
+    
+    if (
+        tile1.includes("1.jpg") &&
+        tile2.includes("2.jpg") &&
+        tile3.includes("3.jpg") &&
+        tile4.includes("4.jpg") &&
+        tile5.includes("5.jpg") &&
+        tile6.includes("6.jpg") &&
+        tile7.includes("7.jpg") &&
+        tile8.includes("8.jpg") &&
+        tile9.includes("9.jpg")
+    ){
+        winner = true
     }
-        for (let j = 0; j < imgOrder.length; j++){
-            let boardPosition = imgOrder[j]
-            let valueOne = boardPosition[0];
-            let valueTwo = boardPosition[1];
-            let valueThree = boardPosition[2];
-            let valueFour = boardPosition[3];
-            let valueFive = boardPosition[4];
-            let valueSix = boardPosition[5];
-            let valueSeven = boardPosition[6];
-            let valueEight = boardPosition[7];
-            let valueNine = boardPosition[8];
-
-            if (valueOne === A && 
-                valueTwo === B && 
-                valueThree === C && 
-                valueFour === D && 
-                valueFive === E &&
-                valueSix === F &&
-                valueSeven === G &&
-                valueEight === H &&
-                valueNine === I){
-            winner = true
-            }
-
-        if (winner === true){
-            turnStatus.innerHTML = "How You Play The Cards You're Dealt Is All That Matters"
-            time = time
-        }
+    if (winner === true){
+        turnStatus.innerHTML = "How You Play The Cards You're Dealt Is All That Matters"
     }
 }
 
