@@ -21,7 +21,7 @@ const turnStatus = document.getElementById("turns");
 //*************** DOM FUNCTIONS ***************//
 
 window.onload = function(){
-
+    playSong()
     for (let r=0; r<rows; r++){
         for (let c=0; c<columns; c++){
             let tile = document.createElement("img");
@@ -37,11 +37,14 @@ window.onload = function(){
             document.getElementById("board").append(tile)
         }
     }
-    var song = document.getElementById("audio")
-    song.play()
 }
 
 //*************** HELPER FUNCTIONS ***************//
+
+function playSong(){
+    var song = document.getElementById("audio")
+    song.play()
+}
 
 function dragStart(){
     currentTile = this;
