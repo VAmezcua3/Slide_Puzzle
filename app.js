@@ -119,6 +119,9 @@ const updateTimer = () => {
             document.getElementById("countdown").style.fontSize="3rem"
             document.getElementById("countdown").style.paddingBottom="2rem"
         }
+        if (time <= 14){
+            count.style.color = "red";
+        }
     }
 }
 
